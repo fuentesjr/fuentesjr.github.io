@@ -1,0 +1,19 @@
+version: 1
+vaults:
+    -
+        fsPath: vault
+useFMTitle: true
+noLegacyNoteRef: true
+site:
+    siteUrl: https://fuentesjr.github.io
+    copyAssets: true
+    siteHierarchies:
+        - root
+    siteRootDir: docs
+    usePrettyRefs: true
+    title: Dendron
+    description: Personal knowledge space
+    duplicateNoteBehavior:
+        action: useVault
+        payload:
+            - vault
