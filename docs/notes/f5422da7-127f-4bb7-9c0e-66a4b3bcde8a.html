@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
   
-  <title>This page has not yet sprouted - Dendron</title>
+  <title>Parsing - Dendron</title>
   
 
   <link
@@ -42,22 +42,22 @@
 <meta name="description" content="Personal knowledge space">
 <meta name="author" content="">
 
-<link rel="canonical" href="https://fuentesjr.github.io/notes/403.html">
+<link rel="canonical" href="https://fuentesjr.github.io/notes/f5422da7-127f-4bb7-9c0e-66a4b3bcde8a.html">
 
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://fuentesjr.github.io/notes/403.html">
+<meta property="og:url" content="https://fuentesjr.github.io/notes/f5422da7-127f-4bb7-9c0e-66a4b3bcde8a.html">
 <meta property="og:description" content="Personal knowledge space">
 <meta property="og:image" content="https://fuentesjr.github.ioundefined">
 
 <meta name="twitter:card" content="summary">
 
-<meta name="twitter:url" content="https://fuentesjr.github.io/notes/403.html">
+<meta name="twitter:url" content="https://fuentesjr.github.io/notes/f5422da7-127f-4bb7-9c0e-66a4b3bcde8a.html">
 <meta name="twitter:description" content="Personal knowledge space">
 <meta name="twitter:image" content="https://fuentesjr.github.ioundefined">
 
 
-  <meta property="og:title" content="This page has not yet sprouted - Dendron" />
-  <meta name="twitter:title" content="This page has not yet sprouted - Dendron" />
+  <meta property="og:title" content="Parsing - Dendron" />
+  <meta name="twitter:title" content="Parsing - Dendron" />
   
 </head>
 
@@ -130,6 +130,10 @@
     <div id="main-content-wrap" class="main-content-wrap">
       
         
+          <nav aria-label="Breadcrumb" class="breadcrumb-nav">
+            <ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="https://fuentesjr.github.io">root</a></li><li class="breadcrumb-nav-list-item"><a href="https://fuentesjr.github.io/notes/18205a61-2ca3-4e67-964f-9081e99fe420.html">Ruby</a></li><li class="breadcrumb-nav-list-item">Parsing</li></ol>
+          </nav>
+        
       
       <div id="main-content" class="main-content" role="main">
 
@@ -160,10 +164,10 @@
 <div id="main" role="main">
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="This page has not yet sprouted">
+    <meta itemprop="headline" content="Parsing">
     
-    <meta itemprop="datePublished" content="2021-05-25T19:42:12+00:00">
-    <meta itemprop="dateModified" content="2021-05-25T19:42:12+00:00">
+    <meta itemprop="datePublished" content="2021-03-31T07:04:43+00:00">
+    <meta itemprop="dateModified" content="2021-04-04T09:50:31+00:00">
 
     <div class="page__inner-wrap">
 
@@ -173,9 +177,56 @@
 
         
 
-        <h1 id="this-page-has-not-yet-sprouted"><a aria-hidden="true" class="anchor-heading" href="#this-page-has-not-yet-sprouted"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>This page has not yet sprouted</h1>
-<p><a href="https://dendron.so/">Dendron</a> (the tool used to generate this site) lets authors selective publish content. You will see this page whenever you click on a link to an unpublished page</p>
-<p><img src="https://foundation-prod-assetspublic53c57cce-8cpvgjldwysl.s3-us-west-2.amazonaws.com/assets/images/not-sprouted.png"></p><span id="navId" data="403"></span>
+        <h1 id="parsing"><a aria-hidden="true" class="anchor-heading" href="#parsing"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>Parsing</h1>
+<h5 id="language-hierarchy-chomsky"><a aria-hidden="true" class="anchor-heading" href="#language-hierarchy-chomsky"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>Language Hierarchy (Chomsky)</h5>
+<ul>
+<li>Type 0: Unrestricted (e.g. English)</li>
+<li>Type 1: Context-sensitive</li>
+<li>Type 2: Context-free (e.g. programming langs)</li>
+<li>Type 3: Regular
+<ul>
+<li>Can only be properly parsed by regular expression engines</li>
+</ul>
+</li>
+</ul>
+<h5 id="two-types-of-parsers"><a aria-hidden="true" class="anchor-heading" href="#two-types-of-parsers"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>Two types of parsers:</h5>
+<ul>
+<li>Top-Down
+<ul>
+<li>Recursive Descend</li>
+<li>Typically written by hand</li>
+</ul>
+</li>
+<li>Bottom-Up
+<ul>
+<li>aka LALR</li>
+<li>Shift-Reduce</li>
+<li>Harder to write by hand</li>
+</ul>
+</li>
+</ul>
+<h5 id="parsing-tools"><a aria-hidden="true" class="anchor-heading" href="#parsing-tools"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>Parsing Tools</h5>
+<ul>
+<li>Ruby based
+<ul>
+<li><code>StringScanner</code></li>
+<li>Racc</li>
+<li>Rexical</li>
+</ul>
+</li>
+<li>Unix based
+<ul>
+<li>yacc/bison</li>
+<li>lex/flex</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://fuentesjr.github.io/notes/5c02e7fb-1063-4218-8752-096750ca1663.html">rails.journey</a></p>
+<hr>
+<h2 id="children"><a aria-hidden="true" class="anchor-heading" href="#children"><svg aria-hidden="true" viewBox="0 0 16 16"><use xlink:href="#svg-link"></use></svg></a>Children</h2>
+<ol>
+<li><a href="https://fuentesjr.github.io/notes/c01fa84d-4138-4a37-9bd2-1e7b8a72c41d.html">Racc</a></li>
+</ol><span id="navId" data="f5422da7-127f-4bb7-9c0e-66a4b3bcde8a"></span>
 
                 
       </section>
