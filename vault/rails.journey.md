@@ -2,11 +2,11 @@
 id: 5c02e7fb-1063-4218-8752-096750ca1663
 title: Rails Journey
 desc: ''
-updated: 1617201769594
+updated: 1622084351613
 created: 1616980293670
 ---
 
-Journey is a module written by Aaron Patterson (AKA @tenderlove) that became the routing solution for Rails as of Rails 3.2, and was officially merged with Rails 4 and up.  It is a facinating piece of work involving Computer Science topics/concepts such as GTGs, NFAs, Lexers, Parser, ASTs, and Grammars.
+Journey is a module written by Aaron Patterson (AKA @tenderlove) that became the routing solution for Rails as of Rails 3.2, and was officially merged with Rails 4 and up.  It is a facinating piece of work involving Computer Science topics/concepts such as GTGs, NFAs, Lexers, Parser, ASTs, and Grammars. Furthermore, it makes use of [[Racc|ruby.parsing.racc]]
 
 
 ## Articles

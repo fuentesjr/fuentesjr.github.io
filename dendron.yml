@@ -5,7 +5,7 @@ vaults:
 useFMTitle: true
 noLegacyNoteRef: true
 site:
-    siteUrl: https://fuentesjr.github.io
+    siteUrl: 'https://fuentesjr.github.io'
     copyAssets: true
     siteHierarchies:
         - root
@@ -17,3 +17,4 @@ site:
         action: useVault
         payload:
             - vault
+initializeRemoteVaults: true

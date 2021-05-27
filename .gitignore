@@ -1,5 +1,5 @@
-.dendron.port
-.dendron.ws
 node_modules
+.dendron.*
 build
+.DS_Store
 
