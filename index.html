@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-density="comfortable">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Salvador Fuentes Jr. — Senior Software Engineer</title>
+  <meta name="description" content="Senior software engineer with 15+ years building and operating backend platforms. Billing, subscriptions, reliability." />
+
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="src/styles.css" />
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>window.__V__ = Date.now();</script>
+  <script>document.write('<script src="src/data.js?v='+window.__V__+'"><\/script>');</script>
+  <script>document.write('<script type="text/babel" src="src/shared.jsx?v='+window.__V__+'"><\/script>');</script>
+  <script>document.write('<script type="text/babel" src="src/editorial.jsx?v='+window.__V__+'"><\/script>');</script>
+  <script>document.write('<script type="text/babel" src="src/dashboard.jsx?v='+window.__V__+'"><\/script>');</script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback, useRef } = React;
+
+    // Tweak defaults — live between EDITMODE markers so host can persist.
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "variant": "dashboard",
+      "theme": "dark",
+      "density": "compact"
+    }/*EDITMODE-END*/;
+
+    const LS_KEY = "fuentesjr.resume.state.v1";
+
+    function loadState() {
+      try {
+        const v = JSON.parse(localStorage.getItem(LS_KEY));
+        if (v && typeof v === "object") return { ...TWEAK_DEFAULTS, ...v };
+      } catch {}
+      return { ...TWEAK_DEFAULTS };
+    }
+
+    function App() {
+      const [state, setState] = useState(loadState());
+      const [paletteOpen, setPaletteOpen] = useState(false);
+      const [helpOpen, setHelpOpen] = useState(false);
+      const [tweaksVisible, setTweaksVisible] = useState(false);
+      const gPrefix = useRef(false);
+
+      // Sync state → DOM + localStorage.
+      useEffect(() => {
+        document.documentElement.dataset.theme = state.theme;
+        document.documentElement.dataset.density = state.density;
+        localStorage.setItem(LS_KEY, JSON.stringify(state));
+      }, [state]);
+
+      // Host tweaks protocol.
+      useEffect(() => {
+        const onMsg = (e) => {
+          const d = e.data || {};
+          if (d.type === "__activate_edit_mode") setTweaksVisible(true);
+          else if (d.type === "__deactivate_edit_mode") setTweaksVisible(false);
+        };
+        window.addEventListener("message", onMsg);
+        window.parent.postMessage({ type: "__edit_mode_available" }, "*");
+        return () => window.removeEventListener("message", onMsg);
+      }, []);
+
+      // Persist edits upstream when changed via tweaks panel (best-effort).
+      const setStateAndPersist = useCallback((updater) => {
+        setState(prev => {
+          const next = typeof updater === "function" ? updater(prev) : updater;
+          const edits = {};
+          for (const k of Object.keys(TWEAK_DEFAULTS)) if (next[k] !== prev[k]) edits[k] = next[k];
+          if (Object.keys(edits).length) {
+            try { window.parent.postMessage({ type: "__edit_mode_set_keys", edits }, "*"); } catch {}
+          }
+          return next;
+        });
+      }, []);
+
+      const toggleTheme = () =>
+        setStateAndPersist(s => ({ ...s, theme: s.theme === "light" ? "dark" : "light" }));
+      const toggleVariant = () =>
+        setStateAndPersist(s => ({ ...s, variant: s.variant === "editorial" ? "dashboard" : "editorial" }));
+
+      const gotoSection = (id) => {
+        const el = document.getElementById(id);
+        if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 40, behavior: "smooth" });
+      };
+
+      // Keyboard.
+      useEffect(() => {
+        const onKey = (e) => {
+          const tag = (e.target && e.target.tagName) || "";
+          const typing = tag === "INPUT" || tag === "TEXTAREA" || e.target?.isContentEditable;
+
+          // ⌘K / Ctrl K — always active.
+          if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+            e.preventDefault();
+            setPaletteOpen(o => !o);
+            return;
+          }
+          if (e.key === "Escape") { setPaletteOpen(false); setHelpOpen(false); return; }
+          if (typing) return;
+
+          if (e.key === "?") { setHelpOpen(o => !o); return; }
+          if (e.key.toLowerCase() === "t") { toggleTheme(); return; }
+          if (e.key.toLowerCase() === "v") { toggleVariant(); return; }
+
+          // Two-key g-prefix nav (vim-style).
+          if (gPrefix.current) {
+            gPrefix.current = false;
+            const k = e.key.toLowerCase();
+            if (k === "h") gotoSection("highlights");
+            else if (k === "e") gotoSection("experience");
+            else if (k === "s") gotoSection("skills");
+            else if (k === "n") gotoSection("now");
+            return;
+          }
+          if (e.key.toLowerCase() === "g") { gPrefix.current = true; setTimeout(() => gPrefix.current = false, 900); }
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+      }, []);
+
+      // Console easter egg.
+      useEffect(() => {
+        const seen = sessionStorage.getItem("fuentesjr.greeted");
+        if (!seen) {
+          console.log("%c hello, fellow engineer 👋", "font: 14px/1.4 ui-monospace, monospace; color: #c26a4a;");
+          console.log("%c try ⌘K · the site has a command palette and a few easter eggs.", "font: 12px/1.4 ui-monospace, monospace; color: #888;");
+          console.log("%c email: fuentesjr@gmail.com", "font: 12px/1.4 ui-monospace, monospace; color: #888;");
+          sessionStorage.setItem("fuentesjr.greeted", "1");
+        }
+      }, []);
+
+      const [konami, setKonami] = useState([]);
+      useEffect(() => {
+        const SEQ = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+        const onKey = (e) => {
+          setKonami(k => {
+            const next = [...k, e.key].slice(-SEQ.length);
+            if (next.join(",").toLowerCase() === SEQ.join(",").toLowerCase()) {
+              document.body.classList.toggle("konami");
+              console.log("%c 🎉 easter egg: contra mode engaged", "color:#c26a4a");
+            }
+            return next;
+          });
+        };
+        window.addEventListener("keydown", onKey);
+        return () => window.removeEventListener("keydown", onKey);
+      }, []);
+
+      // Command palette actions.
+      const actions = [
+        { id: "go-highlights", group: "Navigate", icon: "§", label: "Go to Highlights",       hint: "g h",   run: () => gotoSection("highlights") },
+        { id: "go-experience", group: "Navigate", icon: "§", label: "Go to Experience",       hint: "g e",   run: () => gotoSection("experience") },
+        { id: "go-skills",     group: "Navigate", icon: "§", label: "Go to Skills",           hint: "g s",   run: () => gotoSection("skills") },
+        { id: "go-now",        group: "Navigate", icon: "§", label: "Go to Currently Exploring", hint: "g n",  run: () => gotoSection("now") },
+
+        { id: "theme",         group: "Appearance", icon: "◐", label: "Toggle theme (light/dark)", hint: "t", run: toggleTheme },
+        { id: "variant",       group: "Appearance", icon: "⇄", label: "Swap variant (editorial/dashboard)", hint: "v", run: toggleVariant },
+        { id: "density-c",     group: "Appearance", icon: "▪", label: "Density: compact",     run: () => setStateAndPersist(s => ({ ...s, density: "compact" })) },
+        { id: "density-m",     group: "Appearance", icon: "▫", label: "Density: comfortable", run: () => setStateAndPersist(s => ({ ...s, density: "comfortable" })) },
+        { id: "density-s",     group: "Appearance", icon: "□", label: "Density: spacious",    run: () => setStateAndPersist(s => ({ ...s, density: "spacious" })) },
+
+        { id: "email",         group: "Contact", icon: "@", label: "Send me an email",      hint: "fuentesjr@gmail.com", run: () => window.location.href = "mailto:fuentesjr@gmail.com" },
+        { id: "linkedin",      group: "Contact", icon: "in", label: "Open LinkedIn",         run: () => window.open("https://linkedin.com/in/fuentesjr", "_blank") },
+        { id: "pdf",           group: "Contact", icon: "↓", label: "Download resume.pdf",   run: () => window.open("./salvador_fuentesjr_resume.pdf", "_blank") },
+
+        { id: "whoami",        group: "Fun", icon: "$", label: "whoami",                 hint: "easter egg", run: () => alert("salvador fuentesjr\nsenior software engineer\nuid=1000(fuentesjr) groups=1000(fuentesjr),27(sudo),999(billing)") },
+        { id: "uptime",        group: "Fun", icon: "$", label: "uptime",                 hint: "easter egg", run: () => alert("career uptime: 15+ years\nload average: curious, caffeinated, on-call-ready") },
+        { id: "sudo",          group: "Fun", icon: "$", label: "sudo hire me",           hint: "easter egg", run: () => alert("[sudo] password for recruiter: ****\n→ fuentesjr@gmail.com") },
+        { id: "help",          group: "Fun", icon: "?", label: "Keyboard shortcuts",     hint: "?",           run: () => setHelpOpen(true) },
+      ];
+
+      const Variant = state.variant === "dashboard" ? DashboardVariant : EditorialVariant;
+
+      return (
+        <>
+          <div className="corner">
+            <button onClick={() => setHelpOpen(true)} title="Keyboard shortcuts">?</button>
+            <button onClick={() => setPaletteOpen(true)} title="Command palette">⌘K</button>
+            <button onClick={toggleTheme} title="Toggle theme">{state.theme === "light" ? "☾" : "☀"}</button>
+          </div>
+
+          <main className="app">
+            <Variant data={window.RESUME} />
+            <SharedFooter onOpenPalette={() => setPaletteOpen(true)} />
+          </main>
+
+          <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} actions={actions} />
+          <HelpOverlay open={helpOpen} onClose={() => setHelpOpen(false)} />
+          <TweaksPanel visible={tweaksVisible} state={state} setState={setStateAndPersist} />
+        </>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+</html>
