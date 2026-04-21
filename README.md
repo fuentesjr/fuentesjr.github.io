@@ -1,20 +1,25 @@
-# fuentesjr.github.io
+# Salvador Fuentes Jr. —  A résumé, rendered as a dashboard
+https://fuentesjr.dev
 
-A résumé, rendered as a dashboard.
-Live at https://fuentesjr.dev
+Built as a static site — no framework, no build step, no server. Just HTML, React-via-Babel, and CSS. Two layout variants (dashboard + editorial), command palette, keyboard nav, light/dark, three density modes.
 
-Press `⌘K` for the command palette. Press `?` for everything else.
+## Local development
+Open `index.html` in a browser.
 
-## Running locally
-```
-open index.html
-```
-That's it. No build, no server, no node_modules.
+## Deployment
+Pushes to `main` auto-deploy via GitHub Pages.
 
-## Editing
-- Content → `src/data.js`
-- Layout  → `src/dashboard.jsx` (and `editorial.jsx` if you like serifs)
-- Style   → `src/styles.css`
+## Files
+| path                  | purpose                                    |
+|-----------------------|--------------------------------------------|
+| `index.html`          | entry + app state                          |
+| `src/data.js`         | résumé content                             |
+| `src/dashboard.jsx`   | Platform/SRE dashboard variant             |
+| `src/editorial.jsx`   | Editorial / reliability-report variant     |
+| `src/shared.jsx`      | command palette, tweaks, theme             |
+| `src/styles.css`      | tokens, both variants, print styles        |
+| `portrait.png`        | avatar                                     |
+| `salvador_fuentesjr_resume.pdf` | downloadable resume              |
 
-## Deploying
-Push to `main`. GitHub Pages takes it from there.
+## License
+Content © Salvador Fuentes Jr. 
