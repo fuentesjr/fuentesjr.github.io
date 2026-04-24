@@ -16,7 +16,6 @@ window.RESUME_V2 = {
 
   metrics: [
     { value: "$10M",  unit: "ARR",         label: "Co-led billing delivery for Copilot for Individuals — shipped & scaled within months of launch." },
-    { value: "+8",    unit: "months",      label: "Emergency runway — scaled a billing MySQL cluster through a capacity crunch; gh-ost + custom reclamation tooling outran ingest through the migration." },
     { value: "4",     unit: "teams",       label: "Coordinated MySQL Proxima EU provisioning across secret-scanning, proxima-infra, GLB, and deploy-support." },
     { value: "1",     unit: "upstream fix","label": "Contributed a fix to money-open-exchange-rates during a production incident — benefiting the wider developer community." },
   ],

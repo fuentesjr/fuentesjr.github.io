@@ -18,7 +18,6 @@ window.RESUME = {
   // Headline-worthy numbers. Used as pull-quotes (editorial) and SLI tiles (dashboard).
   metrics: [
     { value: "$10M",  unit: "ARR",         label: "Copilot for Individuals billing — shipped & scaled within months of launch." },
-    { value: "+8",    unit: "months",      label: "Emergency runway — scaled a billing MySQL cluster through a capacity crunch; gh-ost + custom reclamation tooling outran ingest through the migration." },
     { value: "15+",   unit: "years",       label: "Shipping production backends across billing, ads, tools, and platforms." },
     { value: "7",     unit: "teams",       label: "Cross-functional delivery with Growth, Sponsors, Data, Databases, Mobile, Security, and Support." },
   ],

@@ -639,7 +639,6 @@ code { font-family: var(--mono); font-size: 0.9em; }
 .dash-top {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1rem 0;
-  padding-right: 150px; /* reserve space for fixed .corner buttons */
   border-bottom: 1px solid var(--hairline);
   margin-bottom: var(--gap-md);
   flex-wrap: wrap;
@@ -762,7 +761,7 @@ code { font-family: var(--mono); font-size: 0.9em; }
   gap: 1rem;
 }
 @media (min-width: 900px) {
-  .dash-slis__grid { grid-template-columns: repeat(4, 1fr); }
+  .dash-slis__grid { grid-template-columns: repeat(3, 1fr); }
 }
 .dash-sli {
   background: var(--bg-elev);

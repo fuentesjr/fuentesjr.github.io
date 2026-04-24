@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-density="compact">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Side-by-side — v1 vs v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="src/styles.css" />
+  <style>
+    .sbs { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 100vh; }
+    .sbs__col { overflow-y: auto; height: 100vh; }
+    .sbs__col + .sbs__col { border-left: 1px solid var(--hairline); }
+    .sbs__hd {
+      position: sticky; top: 0; z-index: 5;
+      background: var(--bg-elev);
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--hairline);
+      font-family: var(--mono); font-size: 11px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sbs__hd b { color: var(--accent); font-weight: 600; }
+    .sbs iframe { width: 100%; height: calc(100vh - 40px); border: 0; background: var(--bg); display: block; }
+    .sbs__bar {
+      position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+      z-index: 20;
+      background: var(--bg-elev); border: 1px solid var(--hairline);
+      border-radius: 999px; padding: 4px 10px;
+      font-family: var(--mono); font-size: 11px; color: var(--muted);
+      display: flex; gap: 8px; align-items: center;
+    }
+    .sbs__bar a { color: var(--ink); text-decoration: none; padding: 2px 8px; border-radius: 999px; }
+    .sbs__bar a:hover { background: color-mix(in oklch, var(--accent) 15%, transparent); }
+  </style>
+</head>
+<body>
+  <div class="sbs__bar">
+    <span>side-by-side</span>
+    <a href="index.html">← back to full site</a>
+  </div>
+  <div class="sbs">
+    <div class="sbs__col">
+      <div class="sbs__hd"><span>v1 · <b>current</b></span><span>data.js</span></div>
+      <iframe src="index.html?resume=v1&sbs=1"></iframe>
+    </div>
+    <div class="sbs__col">
+      <div class="sbs__hd"><span>v2 · <b>updated PDF</b></span><span>data_v2.js</span></div>
+      <iframe src="index.html?resume=v2&sbs=1"></iframe>
+    </div>
+  </div>
+</body>
+</html>
