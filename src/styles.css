@@ -639,6 +639,7 @@ code { font-family: var(--mono); font-size: 0.9em; }
 .dash-top {
   display: flex; justify-content: space-between; align-items: center;
   padding: 1rem 0;
+  padding-right: 150px; /* reserve space for fixed .corner buttons */
   border-bottom: 1px solid var(--hairline);
   margin-bottom: var(--gap-md);
   flex-wrap: wrap;
@@ -661,7 +662,7 @@ code { font-family: var(--mono); font-size: 0.9em; }
   display: flex; flex-direction: column;
   font-family: var(--mono);
   font-size: 11px;
-  align-items: flex-end;
+  text-align: right;
 }
 .dash-kv__k { color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .dash-kv__v { color: var(--ink); font-size: 13px; }

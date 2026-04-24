@@ -24,7 +24,14 @@
   <div id="root"></div>
 
   <script>window.__V__ = Date.now();</script>
-  <script>document.write('<script src="src/data.js?v='+window.__V__+'"><\/script>');</script>
+  <script>
+    (function(){
+      var q = new URLSearchParams(location.search);
+      var which = q.get('resume') === 'v2' ? 'data_v2' : 'data';
+      document.write('<script src="src/'+which+'.js?v='+window.__V__+'"><\/script>');
+      if (which === 'data_v2') document.write('<script>window.RESUME = window.RESUME_V2;<\/script>');
+    })();
+  </script>
   <script>document.write('<script type="text/babel" src="src/shared.jsx?v='+window.__V__+'"><\/script>');</script>
   <script>document.write('<script type="text/babel" src="src/editorial.jsx?v='+window.__V__+'"><\/script>');</script>
   <script>document.write('<script type="text/babel" src="src/dashboard.jsx?v='+window.__V__+'"><\/script>');</script>
@@ -179,7 +186,16 @@
         { id: "pdf",           group: "Contact", icon: "↓", label: "Download resume.pdf",   run: () => window.open("./salvador_fuentesjr_resume.pdf", "_blank") },
 
         { id: "whoami",        group: "Fun", icon: "$", label: "whoami",                 hint: "easter egg", run: () => alert("salvador fuentesjr\nsenior software engineer\nuid=1000(fuentesjr) groups=1000(fuentesjr),27(sudo),999(billing)") },
-        { id: "uptime",        group: "Fun", icon: "$", label: "uptime",                 hint: "easter egg", run: () => alert("career uptime: 15+ years\nload average: curious, caffeinated, on-call-ready") },
+        { id: "uptime",        group: "Fun", icon: "$", label: "uptime",                 hint: "easter egg", run: () => {
+          const since = (window.RESUME && window.RESUME.computed && window.RESUME.computed.careerStart) || new Date("2010-03-01");
+          const pad = (n) => (n < 10 ? "0" + n : "" + n);
+          let s = Math.max(0, Math.floor((Date.now() - since.getTime()) / 1000));
+          const y = Math.floor(s / (365.25 * 86400)); s -= Math.floor(y * 365.25 * 86400);
+          const d = Math.floor(s / 86400); s -= d * 86400;
+          const h = Math.floor(s / 3600);  s -= h * 3600;
+          const m = Math.floor(s / 60);    s -= m * 60;
+          alert(`career uptime: ${y}y ${pad(d)}d ${pad(h)}:${pad(m)}:${pad(s)}\nload average: curious, caffeinated, on-call-ready`);
+        } },
         { id: "sudo",          group: "Fun", icon: "$", label: "sudo hire me",           hint: "easter egg", run: () => alert("[sudo] password for recruiter: ****\n→ fuentesjr@gmail.com") },
         { id: "help",          group: "Fun", icon: "?", label: "Keyboard shortcuts",     hint: "?",           run: () => setHelpOpen(true) },
       ];

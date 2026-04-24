@@ -26,10 +26,13 @@ function UptimeCounter({ since }) {
     const id = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(id);
   }, []);
-  const ms = now - since;
-  const s = Math.floor(ms / 1000);
-  const years = (s / (365.25 * 24 * 3600)).toFixed(6);
-  return <span className="uptime">{years}y</span>;
+  const pad = (n) => (n < 10 ? "0" + n : "" + n);
+  let s = Math.max(0, Math.floor((now - since) / 1000));
+  const y = Math.floor(s / (365.25 * 86400)); s -= Math.floor(y * 365.25 * 86400);
+  const d = Math.floor(s / 86400); s -= d * 86400;
+  const h = Math.floor(s / 3600);  s -= h * 3600;
+  const m = Math.floor(s / 60);    s -= m * 60;
+  return <span className="uptime">{`${y}y ${pad(d)}d ${pad(h)}:${pad(m)}:${pad(s)}`}</span>;
 }
 
 function DashboardVariant({ data }) {
